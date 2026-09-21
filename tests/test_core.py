@@ -233,6 +233,19 @@ def test_regression_cli_accepts_documented_options(tmp_path):
     assert "No evaluation regression" in result.output
 
 
+def test_eval_finds_default_dataset_outside_checkout(tmp_path, monkeypatch):
+    def capture(dataset, output):
+        tasks = [json.loads(line) for line in dataset.read_text().splitlines()]
+        assert len(tasks) == 8
+        assert all((dataset.parent / task["repo"]).is_dir() for task in tasks)
+        return {"tasks": [{"passed": True}], "metrics": {}}
+
+    monkeypatch.setattr("patchwatch.evaluation.evaluate", capture)
+    monkeypatch.chdir(tmp_path)
+    result = CliRunner().invoke(app, ["eval", "--output", str(tmp_path / "result")])
+    assert result.exit_code == 0, result.output
+
+
 def test_unified_diff_handles_no_final_newline():
     diff = diff_snapshots({"app.py": b"a"}, {"app.py": b"b"})
     assert "\\ No newline at end of file" in diff

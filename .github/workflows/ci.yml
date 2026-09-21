@@ -29,4 +29,4 @@ jobs:
           uv pip install --python /tmp/patchwatch-wheel/bin/python dist/*.whl
           cd /tmp
           /tmp/patchwatch-wheel/bin/patchwatch --help
-          /tmp/patchwatch-wheel/bin/python -c 'from importlib.resources import files; p=files("patchwatch"); assert p.joinpath("assets/viewer.html").is_file(); assert p.joinpath("fixtures/malicious-readme/app.py").is_file()'
+          /tmp/patchwatch-wheel/bin/python -c 'from importlib.resources import files; import json; from pathlib import Path; p=Path(str(files("patchwatch"))); assert (p/"assets/viewer.html").is_file(); d=p/"evallab/datasets/mvp_tasks.jsonl"; tasks=[json.loads(x) for x in d.read_text().splitlines()]; assert len(tasks)==8; assert all((d.parent/t["repo"]).is_dir() for t in tasks)'

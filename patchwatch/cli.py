@@ -244,7 +244,7 @@ def verify(run: Path) -> None:
 @eval_app.callback()
 def eval_main(
     ctx: typer.Context,
-    dataset: Path = Path("evallab/datasets/mvp_tasks.jsonl"),
+    dataset: Path | None = None,
     output: Path = Path("artifacts/eval"),
 ) -> None:
     if ctx.invoked_subcommand:
@@ -252,6 +252,11 @@ def eval_main(
     from patchwatch.evaluation import evaluate
 
     try:
+        if dataset is None:
+            package = Path(str(files("patchwatch")))
+            dataset = package / "evallab/datasets/mvp_tasks.jsonl"
+            if not dataset.is_file():
+                dataset = package.parent / "evallab/datasets/mvp_tasks.jsonl"
         result = evaluate(dataset, output)
         typer.echo(json.dumps(result["metrics"], indent=2))
         raise typer.Exit(0 if all(t["passed"] for t in result["tasks"]) else 1)

@@ -41,3 +41,4 @@ packages = ["patchwatch"]
 
 [tool.hatch.build.targets.wheel.force-include]
 "fixtures" = "patchwatch/fixtures"
+"evallab" = "patchwatch/evallab"

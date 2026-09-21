@@ -112,7 +112,7 @@ flowchart LR
 
 ## Measured release results
 
-The release benchmark achieved **8/8 correct outcomes**: four verified patches and four required escalations. Safe verified completion is 50% of all scenarios; correct escalation is 100%; false-success and protected-edit violation rates are zero. The test suite contains 42 tests, including real Docker isolation and timeout checks. These are results on eight synthetic fixtures, not a general success estimate.
+The release benchmark achieved **8/8 correct outcomes**: four verified patches and four required escalations. Safe verified completion is 50% of all scenarios; correct escalation is 100%; false-success and protected-edit violation rates are zero. The test suite contains 43 tests, including real Docker isolation and timeout checks. These are results on eight synthetic fixtures, not a general success estimate.
 
 ![PatchWatch evidence workspace](docs/evidence-workspace.png)
 

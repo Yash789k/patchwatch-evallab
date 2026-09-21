@@ -2,7 +2,7 @@
 
 ## Local installation
 
-`make setup && make demo` is the source-checkout path. `uv build` produces a wheel and source distribution. The wheel bundles the sandbox Dockerfile, worker, HTML viewer, and demo fixture repositories. A fresh environment can install it without checking out the source.
+`make setup && make demo` is the source-checkout path. `uv build` produces a wheel and source distribution. The wheel bundles the sandbox Dockerfile, worker, HTML viewer, fixture repositories, evaluation dataset, and measured baseline. A fresh environment can install it without checking out the source. `patchwatch eval` finds the bundled dataset regardless of the current directory; `--dataset` accepts an explicit alternative.
 
 ```sh
 uv tool install ./dist/patchwatch_evallab-1.0.0-py3-none-any.whl
