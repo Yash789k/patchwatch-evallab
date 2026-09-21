@@ -1,0 +1,43 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "patchwatch-evallab"
+version = "1.0.0"
+description = "Dependency upgrades with sandbox verification and measurable safety."
+readme = "README.md"
+requires-python = ">=3.12"
+license = "GPL-3.0-only"
+dependencies = ["typer>=0.16,<1", "pydantic>=2.11,<3", "packaging>=25,<27", "tomlkit>=0.13,<1"]
+
+[project.scripts]
+patchwatch = "patchwatch.cli:app"
+
+[dependency-groups]
+dev = ["pytest>=8.4,<10", "ruff>=0.12,<1", "mypy>=1.16,<2", "build>=1.2,<2"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["patchwatch"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["docker: requires a running Docker daemon and sandbox image"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+exclude = ["fixtures", "runs", "artifacts", "site"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+packages = ["patchwatch"]
+
+
+[tool.hatch.build.targets.wheel.force-include]
+"fixtures" = "patchwatch/fixtures"

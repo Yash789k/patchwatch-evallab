@@ -1,0 +1,15 @@
+# Build-only convenience. Execution must go through the controller so policy,
+# disposable copies, deadlines, and network restrictions are applied.
+services:
+  sandbox:
+    image: patchwatch-sandbox:1.0
+    build: ./patchwatch/assets
+    network_mode: none
+    read_only: true
+    user: '65534:65534'
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 128
+    mem_limit: 768m
+    cpus: 1
+    profiles: [build]

@@ -1,0 +1,31 @@
+name: Release packages
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: read
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff # v6
+        with:
+          enable-cache: false
+          version: '0.11.26'
+      - run: uv sync --frozen --python 3.12
+      - name: Check tag matches package version
+        run: uv run python -c 'import os, tomllib; v=tomllib.load(open("pyproject.toml", "rb"))["project"]["version"]; assert os.environ["GITHUB_REF_NAME"] == "v" + v'
+      - run: make check
+      - run: uv build
+      - name: Publish verified distribution files
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          sha256sum dist/* > dist/SHA256SUMS
+          gh release create "$GITHUB_REF_NAME" dist/* --verify-tag --title "PatchWatch EvalLab $GITHUB_REF_NAME" --notes-file CHANGELOG.md

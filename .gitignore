@@ -165,7 +165,6 @@ venv.bak/
 .ropeproject
 
 # mkdocs documentation
-/site
 
 # mypy
 .mypy_cache/
@@ -216,3 +215,18 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# PatchWatch local evidence and environments
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.DS_Store
+runs/
+artifacts/
+dist/
+*.egg-info/
+.env
+.env.*

@@ -1,0 +1,32 @@
+name: Quality and package
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff # v6
+        with:
+          enable-cache: false
+          version: '0.11.26'
+      - run: uv sync --frozen --python 3.12
+      - run: make check
+      - run: uv build
+      - name: Verify installable wheel includes the demo and viewer
+        run: |
+          uv venv /tmp/patchwatch-wheel --python 3.12
+          uv pip install --python /tmp/patchwatch-wheel/bin/python dist/*.whl
+          cd /tmp
+          /tmp/patchwatch-wheel/bin/patchwatch --help
+          /tmp/patchwatch-wheel/bin/python -c 'from importlib.resources import files; p=files("patchwatch"); assert p.joinpath("assets/viewer.html").is_file(); assert p.joinpath("fixtures/malicious-readme/app.py").is_file()'
