@@ -1,9 +1,9 @@
-# PatchWatch EvalLab
+# Python Dependency Upgrade Evaluator
 
 **Dependency upgrades with evidence.** PatchWatch inspects a Python repository, plans a constrained migration, verifies it in Docker, and produces a reviewable patch. EvalLab checks the outcome, policy compliance, and the decisions that produced it.
 
-[![Quality and package](https://github.com/Yash789k/patchwatch-evallab/actions/workflows/ci.yml/badge.svg)](https://github.com/Yash789k/patchwatch-evallab/actions/workflows/ci.yml)
-[![Sandbox and evaluation](https://github.com/Yash789k/patchwatch-evallab/actions/workflows/eval-regression.yml/badge.svg)](https://github.com/Yash789k/patchwatch-evallab/actions/workflows/eval-regression.yml)
+[![Quality and package](https://github.com/Yash789k/python-dependency-upgrade-evaluator/actions/workflows/ci.yml/badge.svg)](https://github.com/Yash789k/python-dependency-upgrade-evaluator/actions/workflows/ci.yml)
+[![Sandbox and evaluation](https://github.com/Yash789k/python-dependency-upgrade-evaluator/actions/workflows/eval-regression.yml/badge.svg)](https://github.com/Yash789k/python-dependency-upgrade-evaluator/actions/workflows/eval-regression.yml)
 
 No paid API, hosted database, or always-on server. The default engine uses curated syntax-aware migration recipes. It makes **zero model calls** and never merges, deploys, publishes, or edits the original repository.
 
@@ -12,8 +12,8 @@ No paid API, hosted database, or always-on server. The default engine uses curat
 Prerequisites: [uv](https://docs.astral.sh/uv/getting-started/installation/) and a running Docker-compatible engine. Python 3.12 is selected automatically by uv. Linux Docker Engine and macOS Docker Desktop/Colima are supported; Windows users should use WSL2 with Docker integration.
 
 ```sh
-git clone https://github.com/Yash789k/patchwatch-evallab.git
-cd patchwatch-evallab
+git clone https://github.com/Yash789k/python-dependency-upgrade-evaluator.git
+cd python-dependency-upgrade-evaluator
 make setup
 make demo
 ```
